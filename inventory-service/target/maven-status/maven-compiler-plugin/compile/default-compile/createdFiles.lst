@@ -1,0 +1,6 @@
+com\rohan\inventory_service\InventoryServiceApplication.class
+com\rohan\inventory_service\model\Inventory.class
+com\rohan\inventory_service\controller\InventoryController.class
+com\rohan\inventory_service\service\InventoryService.class
+com\rohan\inventory_service\service\InventoryServiceImpl.class
+com\rohan\inventory_service\repository\InventoryRepository.class

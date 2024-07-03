@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.rohan.inventory_service.InventoryRepositoryApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.554 s -- in com.rohan.inventory_service.InventoryRepositoryApplicationTests

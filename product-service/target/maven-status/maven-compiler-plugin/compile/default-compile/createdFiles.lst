@@ -1,0 +1,10 @@
+com\rohan\productservice\dto\ProductRequest$ProductRequestBuilder.class
+com\rohan\productservice\controller\ProductController.class
+com\rohan\productservice\model\Product$ProductBuilder.class
+com\rohan\productservice\model\Product.class
+com\rohan\productservice\repository\ProductRepository.class
+com\rohan\productservice\ProductServiceApplication.class
+com\rohan\productservice\dto\ProductResponse.class
+com\rohan\productservice\dto\ProductRequest.class
+com\rohan\productservice\service\ProductService.class
+com\rohan\productservice\dto\ProductResponse$ProductResponseBuilder.class
