@@ -8,6 +8,7 @@ import com.rohan.order_service.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,9 +16,11 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final WebClient webClient;
+
     @Override
     public void placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
@@ -28,10 +31,21 @@ public class OrderServiceImpl implements OrderService{
                 .map(this::mapToDto)
                 .toList();
 
-        orderRepository.save(order);
+        // Call inverntory service, and place order if product present in Stock
+        Boolean result = webClient.get()    // get method will requset another service
+                .uri("http://localhost:8082/api/inventory")
+                .retrieve()                         // to be able to retrieve the response
+                .bodyToMono(Boolean.class)          // for the web Client we need to define type of response we're returning from inventory service. Mono if object in reactive programming like Optional<?>
+                .block();                           // By Default webClint makes Asynchronous request
+        // to make synchrounous request with web client, use block()
+        if (result) {
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("Product is not in stock, please try again later");
+        }
     }
 
-    private OrderLineItems mapToDto(OderLineItemsDto orderOderLineItemsDto){
+    private OrderLineItems mapToDto(OderLineItemsDto orderOderLineItemsDto) {
         OrderLineItems orderLineItems = new OrderLineItems();
         orderLineItems.setPrice(orderOderLineItemsDto.getPrice());
         orderLineItems.setQuantity(orderOderLineItemsDto.getQuantity());
